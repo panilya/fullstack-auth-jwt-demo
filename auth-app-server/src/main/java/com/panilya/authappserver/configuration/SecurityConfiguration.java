@@ -1,6 +1,7 @@
 package com.panilya.authappserver.configuration;
 
 import com.panilya.authappserver.security.CustomUserDetails;
+import com.panilya.authappserver.security.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,12 +22,14 @@ public class SecurityConfiguration {
     private final CustomUserDetails customUserDetails;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final JwtTokenFilter jwtTokenFilter;
 
     @Autowired
-    public SecurityConfiguration(CustomUserDetails customUserDetails, PasswordEncoder passwordEncoder, AuthenticationConfiguration authenticationConfiguration) {
+    public SecurityConfiguration(CustomUserDetails customUserDetails, PasswordEncoder passwordEncoder, AuthenticationConfiguration authenticationConfiguration, JwtTokenFilter jwtTokenFilter) {
         this.customUserDetails = customUserDetails;
         this.passwordEncoder = passwordEncoder;
         this.authenticationConfiguration = authenticationConfiguration;
+        this.jwtTokenFilter = jwtTokenFilter;
     }
 
     @Bean
@@ -39,7 +43,8 @@ public class SecurityConfiguration {
                         .antMatchers("/api/signup").permitAll()
                         .anyRequest().authenticated()
                 )
-                .authenticationProvider(daoAuthenticationProvider());
+                .authenticationProvider(daoAuthenticationProvider())
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
