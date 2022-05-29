@@ -1,25 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{ useState,useEffect } from "react";
+import Registry from "./Registration/Registry.js";
+import Logining from "./Logining/Logining.js";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App (){
+    
+    
+    const [isLogged,setIsLogged] = useState(false);
+      
+    return(
+        <div>
+        {isLogged && <Logining setIsLogged={setIsLogged}/>}
+        {!isLogged && <Registry setIsLogged={setIsLogged}/>}
+      </div>
+    )
 }
-
-export default App;
