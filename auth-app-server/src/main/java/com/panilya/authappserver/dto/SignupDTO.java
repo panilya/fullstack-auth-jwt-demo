@@ -6,13 +6,13 @@ import java.util.List;
 
 public class SignupDTO {
     private Long id;
-    private String usename;
+    private String username;
     private String password;
     private List<UserRole> userRoles;
 
-    public SignupDTO(Long id, String usename, String password, List<UserRole> userRoles) {
+    public SignupDTO(Long id, String username, String password, List<UserRole> userRoles) {
         this.id = id;
-        this.usename = usename;
+        this.username = username;
         this.password = password;
         this.userRoles = userRoles;
     }
@@ -25,12 +25,12 @@ public class SignupDTO {
         this.id = id;
     }
 
-    public String getUsename() {
-        return usename;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsename(String usename) {
-        this.usename = usename;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
