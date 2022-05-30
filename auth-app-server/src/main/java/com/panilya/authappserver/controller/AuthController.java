@@ -1,5 +1,6 @@
 package com.panilya.authappserver.controller;
 
+import com.panilya.authappserver.dto.JwtAuthenticationResponse;
 import com.panilya.authappserver.dto.LoginDTO;
 import com.panilya.authappserver.dto.SignupDTO;
 import com.panilya.authappserver.model.User;
@@ -38,7 +39,8 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginDTO loginRequest) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
         authenticationManager.authenticate(authenticationToken);
-        return ResponseEntity.ok(jwtTokenProvider.generateToken(loginRequest.getUsername()));
+        String token = jwtTokenProvider.generateToken(loginRequest.getUsername());
+        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 
     @PostMapping("/signup")
