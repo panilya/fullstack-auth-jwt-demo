@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import './RegistryStyle.css'
-
-
+import * as AuthService from "../../services/AuthService";
 
 export default function Registry({setIsLogged}) {
 
@@ -19,7 +18,8 @@ export default function Registry({setIsLogged}) {
 
   
   const onRegister = (data) => {
-    alert('successfully registered:' + JSON.stringify(data));
+    AuthService.signup(data.username, data.password)
+    // alert('successfully registered:' + JSON.stringify(data));
     reset()
   }
 

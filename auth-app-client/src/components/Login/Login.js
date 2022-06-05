@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import './Logining.css'
-
-
+import * as AuthService from "../../services/AuthService";
 
 export default function Logining({setIsLogged}) {
 
@@ -19,7 +18,8 @@ export default function Logining({setIsLogged}) {
 
   
   const onLogin = (data) => {
-    alert('successfully Logined:' + JSON.stringify(data));
+    AuthService.login(data.username, data.password)
+    // alert('successfully Logined:' + JSON.stringify(data));
     reset()
   }
 
