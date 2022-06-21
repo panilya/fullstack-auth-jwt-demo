@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import './RegistryStyle.css'
-import * as AuthService from "../../services/AuthService";
+import {login, logout, signup} from "../services/AuthService";
+import './Form.css'
 
-export default function Registry({setIsLogged}) {
+
+
+export default function Form({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) {
 
   const { 
     register,
@@ -18,15 +20,19 @@ export default function Registry({setIsLogged}) {
 
   
   const onRegister = (data) => {
-    AuthService.signup(data.username, data.password)
-    // alert('successfully registered:' + JSON.stringify(data));
-    reset()
+    signup(data.username, data.password)
+    alert('successfully registered:' + JSON.stringify(data));
+  }
+
+  const onLogin = (data) => {
+    login(data.username, data.password)
+    alert('successfully Logined:' + JSON.stringify(data));
   }
 
   return (
     <div className="body">
-      <form className='form' onSubmit={handleSubmit(onRegister)}>
-        <h1 className='body_title'>Sign up!</h1>
+      <form className='form' onSubmit={handleSubmit(isLogged? onLogin : onRegister)}>
+        <h1 className='body_title'>{title}</h1>
         <label className="labels">Username:
         <br />
 
@@ -74,12 +80,13 @@ export default function Registry({setIsLogged}) {
         </div>
 
         <h4
+        style={Pstyle}
         className='logIned'
-          onClick={() => setIsLogged(true)}
-        >I have account</h4>
+          onClick={() => setIsLogged(!isLogged)}
+        >{HaveAccButton}</h4>
 
         <div className='div_submit'>
-          <input value={'Register!'}className='submit' disabled={!isValid}type="submit"/>
+          <input value={SumbitName}className='submit' disabled={!isValid}type="submit"/>
         </div>
         
       </form>
