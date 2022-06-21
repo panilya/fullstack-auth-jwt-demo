@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import {login, logout, signup} from "../services/AuthService";
 import './Form.css'
 
 
 
-export default function Form({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle}) {
+export default function Form({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) {
 
   const { 
     register,
@@ -19,13 +20,18 @@ export default function Form({setIsLogged, title,HaveAccButton,SumbitName,isLogg
 
   
   const onRegister = (data) => {
+    signup(data.username, data.password)
     alert('successfully registered:' + JSON.stringify(data));
-    reset()
+  }
+
+  const onLogin = (data) => {
+    login(data.username, data.password)
+    alert('successfully Logined:' + JSON.stringify(data));
   }
 
   return (
     <div className="body">
-      <form className='form' onSubmit={handleSubmit(onRegister)}>
+      <form className='form' onSubmit={handleSubmit(isLogged? onLogin : onRegister)}>
         <h1 className='body_title'>{title}</h1>
         <label className="labels">Username:
         <br />
