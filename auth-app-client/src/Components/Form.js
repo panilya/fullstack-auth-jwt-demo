@@ -21,7 +21,7 @@ const Form = ({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) =>
   const onRegister = (data) => {
     signup(data.username, data.password);
     reset();
-
+  }
 
   const onLogin = (data) => {
     login(data.username, data.password);
@@ -91,7 +91,7 @@ const Form = ({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) =>
         </div>
       </form>
     </>
-    )
+  )
 }
 
 export {Form}
