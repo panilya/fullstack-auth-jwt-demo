@@ -1,11 +1,12 @@
+
 import React, {useContext } from "react";
 import { useForm } from "react-hook-form";
 import {login,signup} from "../services/AuthService";
 import { ThemeContext } from "../Contexts/ThemeContext";
 
 
-
 const Form = ({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) =>{
+
   const { 
     register,
     formState: {
@@ -20,8 +21,7 @@ const Form = ({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) =>
   const onRegister = (data) => {
     signup(data.username, data.password);
     reset();
-    alert('successfully registered:' + JSON.stringify(data));
-  }
+
 
   const onLogin = (data) => {
     login(data.username, data.password);
@@ -34,6 +34,7 @@ const Form = ({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) =>
     <>
       <button className="switch" onClick={() => toggleTheme()}>Theme: {theme}</button>
       <form id={theme} className='form' onSubmit={handleSubmit(isLogged? onLogin : onRegister)}>
+
         <h1 className='body_title'>{title}</h1>
         <label className="labels">Username:
         <br />
@@ -72,7 +73,6 @@ const Form = ({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) =>
             value: 20,
             message: "Maximum 20 symbols!"
           }
-          
         })}/>
         </label>
         <br />
@@ -86,11 +86,9 @@ const Form = ({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) =>
         className='logIned'
           onClick={() => setIsLogged(!isLogged)}
           >{HaveAccButton}</h4>
-
         <div className='div_submit'>
           <input value={SumbitName}className='submit' disabled={!isValid}type="submit"/>
         </div>
-        
       </form>
     </>
     )

@@ -1,3 +1,4 @@
+
 import React,{useState} from "react";
 import {Form} from "./Components/Form";
 import { ThemeContext } from "./Contexts/ThemeContext";
@@ -15,7 +16,6 @@ export default function App (){
   const style = {
     margin:'0'
   }
-
 
   return(
     <div className="App" id ={theme}>
