@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, {useContext } from "react";
 import { useForm } from "react-hook-form";
-import {login, logout, signup} from "../services/AuthService";
-import './Form.css'
+import {login,signup} from "../services/AuthService";
+import { ThemeContext } from "../Contexts/ThemeContext";
 
 
 
-export default function Form({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) {
-
+const Form = ({setIsLogged, title,HaveAccButton,SumbitName,isLogged,Pstyle,}) =>{
   const { 
     register,
     formState: {
@@ -18,20 +17,23 @@ export default function Form({setIsLogged, title,HaveAccButton,SumbitName,isLogg
     mode: "onBlur"
   });
 
-  
   const onRegister = (data) => {
-    signup(data.username, data.password)
+    signup(data.username, data.password);
+    reset();
     alert('successfully registered:' + JSON.stringify(data));
   }
 
   const onLogin = (data) => {
-    login(data.username, data.password)
+    login(data.username, data.password);
+    reset();
     alert('successfully Logined:' + JSON.stringify(data));
   }
-
+  
+  const {theme, toggleTheme} = useContext(ThemeContext)
   return (
-    <div className="body">
-      <form className='form' onSubmit={handleSubmit(isLogged? onLogin : onRegister)}>
+    <>
+      <button className="switch" onClick={() => toggleTheme()}>Theme: {theme}</button>
+      <form id={theme} className='form' onSubmit={handleSubmit(isLogged? onLogin : onRegister)}>
         <h1 className='body_title'>{title}</h1>
         <label className="labels">Username:
         <br />
@@ -70,7 +72,7 @@ export default function Form({setIsLogged, title,HaveAccButton,SumbitName,isLogg
             value: 20,
             message: "Maximum 20 symbols!"
           }
-        
+          
         })}/>
         </label>
         <br />
@@ -83,14 +85,15 @@ export default function Form({setIsLogged, title,HaveAccButton,SumbitName,isLogg
         style={Pstyle}
         className='logIned'
           onClick={() => setIsLogged(!isLogged)}
-        >{HaveAccButton}</h4>
+          >{HaveAccButton}</h4>
 
         <div className='div_submit'>
           <input value={SumbitName}className='submit' disabled={!isValid}type="submit"/>
         </div>
         
       </form>
-    </div>
+    </>
     )
 }
 
+export {Form}
